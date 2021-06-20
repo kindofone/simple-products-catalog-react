@@ -1,11 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
-import Product from './Product.js';
 import {useEffect, useState} from 'react';
 
+import Cart from './Cart.js';
+import Categories from './Categories.js';
+import Catalog from './Catalog.js';
+
 function App() {
-  const [categories, setCategories] = useState([]);
+  const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
+
+  const addToCart = id => {
+    const currentQuantity = cartItems[id] ?? 0;
+    setCartItems({...cartItems, [id]: currentQuantity + 1});
+  };
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
@@ -15,13 +22,12 @@ function App() {
 
   return (
     <div className="App">
-      <div>{categories.map(category => <a href="#">category</a>)}</div>
-      <div className="products">
-        {products.length === 0
-          ? "Loading..."
-          : products.map(product => <Product {...product} />)}
+      <div className="Header">
+        <Categories />
+        <Cart products={products} items={cartItems} />
       </div>
-    </div>
+      <Catalog products={products} onAddToCart={addToCart} />
+    </div>  
   );
 }
 

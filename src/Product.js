@@ -7,6 +7,7 @@ function Product({
   image,
   title,
   price,
+  onAddToCart,
 }) {
   return (
     <div className="product">
@@ -14,7 +15,7 @@ function Product({
       <span>{category}</span>
       <h3>{title}</h3>
       <p>{description}</p>
-      <button>Buy ${price}</button>
+      <button onClick={() => onAddToCart(id)}>Add to Cart (${price})</button>
     </div>
   );
 }
