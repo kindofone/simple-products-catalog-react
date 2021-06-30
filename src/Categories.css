@@ -13,3 +13,7 @@
 .category-item {
     list-style-type: none;
 }
+
+.custom-category {
+    font-weight: bold;
+}

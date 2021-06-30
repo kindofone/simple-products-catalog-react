@@ -1,33 +1,26 @@
 import './App.css';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Cart from './Cart.js';
 import Categories from './Categories.js';
 import Catalog from './Catalog.js';
 
+import CatalogProvider from './CatalogContext';
+import CartProvider from './CartContext';
+
 function App() {
-  const [cartItems, setCartItems] = useState({});
-  const [products, setProducts] = useState([]);
-
-  const addToCart = id => {
-    const currentQuantity = cartItems[id] ?? 0;
-    setCartItems({...cartItems, [id]: currentQuantity + 1});
-  };
-
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then(response => response.json())
-      .then(data => setProducts(data));
-  }, []);
-
   return (
-    <div className="App">
-      <div className="Header">
-        <Categories />
-        <Cart products={products} items={cartItems} />
-      </div>
-      <Catalog products={products} onAddToCart={addToCart} />
-    </div>  
+    <CatalogProvider>
+      <CartProvider>
+        <div className="App">
+          <div className="Header">
+            <Categories />
+            <Cart />
+          </div>
+          <Catalog />
+        </div>
+      </CartProvider>
+    </CatalogProvider>
   );
 }
 
